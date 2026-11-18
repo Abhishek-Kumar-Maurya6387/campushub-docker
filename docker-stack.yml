@@ -1,5 +1,5 @@
 x-api: &api
-  image: USERNAME/campushub-api:1.0
+  image: abhishek6387/campushub-api:1.0
   env_file: .env
   restart: unless-stopped
   networks: [backend, data]
@@ -26,7 +26,7 @@ services:
     deploy: { resources: { limits: { cpus: "0.25", memory: 128M } } }
 
   frontend:
-    image: USERNAME/campushub-frontend:1.0
+    image: abhishek6387/campushub-frontend:1.0
     networks: [frontend]
     restart: unless-stopped
     deploy: { resources: { limits: { cpus: "0.25", memory: 128M } } }

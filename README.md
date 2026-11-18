@@ -17,3 +17,17 @@ The application code in `app/` is complete and works. Do not change it. Your job
 
 Gateway routes: `/` to frontend, `/api/` to api, `/storage/` to `minio:9000/campushub/`.
 Environment variable names are in `.env.example`. Copy it to `.env` and keep `.env` out of git.
+
+## How to run
+1. `cp .env.example .env` and fill in the values
+2. `docker compose up -d --build --wait`
+3. Open http://localhost:8080
+4. Run `grade.sh` to verify
+
+## Services
+gateway (nginx), frontend, api, worker, db (postgres), redis, rabbitmq, minio (silo fork), mailhog
+
+## Design decisions
+1. Three networks (frontend, backend, data), with data marked internal: the database and redis cannot be reached from the gateway or the outside, which limits the blast radius.
+2. Only the gateway is published on all interfaces: a single entry point is easier to secure, and the admin UIs are bound to 127.0.0.1.
+3. The worker reuses the API image: one build gives identical code for both services, and the worker simply overrides the command and disables the API healthcheck.
